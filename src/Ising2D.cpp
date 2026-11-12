@@ -7,7 +7,7 @@
 #include "eigen-5.0.1/eigen-5.0.1/Eigen/Dense"
 #include "eigen-5.0.1/eigen-5.0.1/Eigen/Eigenvalues"
 
-Ising2D::Ising2D(int Lattice_size, double Temperature, int seed)
+Ising2D::Ising2D(int Lattice_size, double Temperature, int seed, bool ordered)
 {
     //Assign member variables from the given inputs
     L_ = Lattice_size;
@@ -26,7 +26,7 @@ Ising2D::Ising2D(int Lattice_size, double Temperature, int seed)
     generator_ = Ising2D::set_up_generator(seed);
 
     //Initialise lattice according to specified size
-    lattice_ = Ising2D::set_lattice(L_);
+    lattice_ = Ising2D::set_lattice(L_, ordered);
 
     //Pad lattice for calculations
     P_lattice_ = Ising2D::pad_lattice(lattice_);
@@ -38,10 +38,8 @@ Ising2D::Ising2D(int Lattice_size, double Temperature, int seed)
 
 
 //Initialise lattice of specified size L_
-Eigen::MatrixXd Ising2D::set_lattice(int size)
+Eigen::MatrixXd Ising2D::set_lattice(int size, bool ordered)
 {
-    Eigen::MatrixXd m1 = Eigen::MatrixXd::Zero(size, size);
-
     // Hard-coded like this for the unit testing///
     // //Fully control how it's set for now
     // m1(0,0) = 0;
@@ -50,23 +48,29 @@ Eigen::MatrixXd Ising2D::set_lattice(int size)
     // m1(1,1) = 3;
     //////////////////////////////////////////////
 
-    //For normal algorithm: go with random initialisation
-    for(int i=0; i < L_; i++)
+    Eigen::MatrixXd m1 = Eigen::MatrixXd::Ones(size, size);
+
+    //For normal algorithm, if ordered is false: go with random initialisation
+    if (ordered==false)
     {
-        for(int j=0; j < L_; j++)
+        //Init randomly
+        for(int i=0; i < L_; i++)
         {
-            int spin = my_spin_pdf_(generator_);
-            if (spin==0)
+            for(int j=0; j < L_; j++)
             {
-                m1(i,j) = -1;
+                int spin = my_spin_pdf_(generator_);
+                if (spin==0)
+                {
+                    m1(i,j) = -1;
+                }
+                else
+                {
+                    m1(i,j) = spin;
+                }
+                
             }
-            else
-            {
-                m1(i,j) = spin;
-            }
-            
         }
-    }
+    }    
 
     return m1;
 }

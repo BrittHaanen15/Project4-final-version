@@ -30,10 +30,10 @@ public:
   double beta;
 
   // Constructor
-  Ising2D(int Lattice_size, double Temperature, int seed = 2026);
+  Ising2D(int Lattice_size, double Temperature, int seed = 2026, bool ordered = false);
 
   //Initialise lattice of specified size L_
-  Eigen::MatrixXd set_lattice(int size);
+  Eigen::MatrixXd set_lattice(int size, bool ordered);
 
   //Pad lattice for calculations using periodic boundary conditions
   Eigen::MatrixXd pad_lattice(Eigen::MatrixXd lat);
