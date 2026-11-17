@@ -17,12 +17,12 @@
 int main()
 {
     //File for writing results
-    std::ofstream outFile("Outputs/Timingtest_YES.txt");
+    std::ofstream outFile("Outputs/Timingtest_NO.txt");
     outFile << "time(s)\n";
     //Start timing
     std::clock_t t1 = std::clock();
 
-    for (int j = 0; j<5; j++) //Run 10 timing tests
+    for (int j = 0; j<5; j++) //Run 5 timing tests
     {
         
 
