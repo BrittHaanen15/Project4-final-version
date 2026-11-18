@@ -29,7 +29,7 @@ int main()
         bool ordered_state = false;
 
         //Temperatures to try
-        std::vector<double> temperatures = make_a_range(2.18, 2.216, 0.003, true);
+        std::vector<double> temperatures = make_a_range(2.23, 2.25, 0.001, true);
 
         #ifdef _OPENMP
         {
@@ -40,7 +40,7 @@ int main()
                 double temp = temperatures[i];
 
                 //File for writing results
-                std::string filename = "Outputs/PhaseTrans_L" + std::to_string(lattice_size) + "_T" + std::to_string(temp) + "_unordered_n10e6.txt";
+                std::string filename = "Outputs/VERYFINESEARCH/PhaseTrans_L" + std::to_string(lattice_size) + "_T" + std::to_string(temp) + "_unordered_n10e6.txt";
                 
                 std::ofstream outFile(filename);
                 outFile << "epsilon, abs(m)\n";
@@ -77,7 +77,7 @@ int main()
                     double temp = temperatures[i];
 
                     //File for writing results
-                    std::string filename = "Outputs/PhaseTrans_L" + std::to_string(lattice_size) + "_T" + std::to_string(temp) + "_unordered_n10e6.txt";
+                    std::string filename = "Outputs/VERYFINESEARCH/PhaseTrans_L" + std::to_string(lattice_size) + "_T" + std::to_string(temp) + "_unordered_n10e6.txt";
                     
                     std::ofstream outFile(filename);
                     outFile << "epsilon, abs(m)\n";
@@ -96,7 +96,7 @@ int main()
                             model.flip_a_spin();
                         }
                         
-                        //Calculate
+                        //Calculatecd
                         double eps = model.calculate_epsilon();
                         double mag = model.calculate_mag();
 
